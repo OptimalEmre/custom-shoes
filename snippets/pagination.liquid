@@ -1,0 +1,33 @@
+
+<ul class="pagination">
+  {% if paginate.previous.is_link == false %}
+    <li aria-hidden="true">
+      <button class="" disabled class="button--pagination">
+        {% render 'icon-arrow-left' %}
+        
+      </button>
+    </li>
+    {% else %}
+    <li>
+      <a href="{{ paginate.previous.url }}" class="button--pagination" aria-lablel="Previous products page">
+        {% render 'icon-arrow-left' %}
+      </a>
+    </li>
+  {% endif %}
+  <li class="">
+      Page {{ paginate.current_page }} of {{ paginate.pages }}
+  </li>
+  {% if paginate.next.is_link == false %}
+    <li aria-hidden="true">
+      <button class="" class="button--pagination" disabled>
+        {% render 'icon-arrow-right' %}
+      </button>
+    </li>
+  {% else %}
+    <li>
+      <a href="{{ paginate.next.url }}" class="button--pagination">
+        {% render 'icon-arrow-right' %}
+      </a>
+    </li>
+  {% endif %}
+</ul>

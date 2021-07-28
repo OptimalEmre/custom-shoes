@@ -1,0 +1,19 @@
+{% if criteria == null %}
+    {% assign criteria = 'Pattern' %}
+{% endif %}
+
+{% assign criteriaValues = product.options_by_name[criteria].values %}
+{% assign labels = "" %}
+
+{% for value in criteriaValues %}
+    {% capture currentLabel %}
+        <label for="{{ value }}-productSelect{{product.id}}" class="product__size-label{% if forloop.first %} product__size-label--active {% endif %}">Select your size</label>
+    {% endcapture %}
+
+    {% assign labels = labels | append: currentLabel %}
+{% endfor %}
+
+<div class="product__size-label-wrapper">
+    {{ labels }}
+    {% render 'fitting-guide-button' %}
+</div>

@@ -1,0 +1,133 @@
+{% assign current_variant = product.selected_or_first_available_variant %}
+{% assign description = '' %}
+{% assign details = '' %}
+{% assign splitter = '' %}
+{% assign id = -1 %}
+
+{% if product.available != false %}
+    {% assign id = current_variant.id %}
+{% endif %}
+
+{% if product.description != blank %}
+    {% if product.description contains '<h3><span data-mce-fragment="1">Details</span></h3>' %}
+        {% assign splitter = '<h3><span data-mce-fragment="1">Details</span></h3>' %}  
+    {% else %}
+        {% assign splitter = '<h3><span data-mce-fragment="1">details</span></h3>' %}
+    {% endif %}
+    {% assign splitText = product.description | split: splitter %}
+    {% assign description = splitText[0] %}
+    {% if splitText.size > 1 %}
+        {% assign details = splitText[1] | strip %}
+    {% endif %}
+    
+{% endif %}
+
+{% assign featured_image = current_variant.featured_image | default: product.featured_image %}
+
+<section class="lg--fixed-width--secondary product">
+    <div class="product__details" data-product-id="{{ id }}" data-available="{% if product.available %}1{% else %}0{% endif %}">
+        <div class="product__images">
+            {% render 'pattern-images', product: product %}
+        </div>
+        <div class="product__information flow-content">
+            <div class="product__title-and-price">
+                <h1 class="section-heading product__heading">{{ product.title }}</h1>
+                {% if product.available != false %}
+                    <p class="product__price"><span class="product-price--compared">{{ product.compare_at_price_max | money_without_currency }}</span>{{ product.price | money }}</p>
+                {% else %}
+                    <p class="product__price">Out of stock</p>
+                {% endif %}
+            </div>
+            <div class="product__review-info">
+                {% render 'judgeme_widgets', widget_type: 'judgeme_preview_badge', jm_style: '', concierge_install: false, product: product %}
+            </div>
+            <div class="product__description--static">
+                <div class="product__description-text--static">{{ description }}</div>
+            </div>
+
+            <div class="collection__pattern-nav product__pattern-nav">
+                {% render 'patterns' %}
+                {% if product.available %}
+                    <div class="product__out-of-stock">This color is out of stock</div>
+                {% endif %}
+                
+            </div>
+            <div class="product__shopping-buttons flow-content">
+                <div class="product__add-to-cart-wrapper flow-content">
+                    <div id="AnimationWrapper" class="shop__arrow-round-wrapper">
+                        <div class="shop__arrow-round"></div>
+                        <div class="shop__success">{% render 'icon-tick-mark' %}</div>
+                        <div class="shop__error">{% render 'icon-error' %}</div>
+                    </div>
+                    <!-- <form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm" class="product__size-form flow-content">                 -->
+                        {% render 'size-select-box', product: product, criteria: 'Pattern', fillWith: 'Size' %}
+                        
+                        <button type="submit" name="add" id="AddToCart" class="main-button button--collection-primary" {% if product.available == false %}disabled{% endif %}>Add to Cart</button>
+                        
+                    <!-- </form> -->
+                    {% form 'product', product, class:form_classes, novalidate: 'novalidate', data-product-form: 'checkout' %}
+                        {%- comment -%} hidden selectbox that contains the selected variant.
+                        This select box is used to pass the selected
+                        variant's id to synamic checkout button {%- endcomment -%}
+                        <select name="id" id="ProductSelect-{{ section.id }}" class="product-form__variants no-js">
+                            <option value="0" selected>Size</option>
+                        </select>
+                        <button name="hook" id="checkout-hook" class="main-button button--collection-secondary button--checkout" {% if product.available == false %}disabled{% endif %}>Buy it now</button>
+                        {{ form | payment_button }}
+                        
+                    {% endform %}  
+                </div>
+                
+                
+                
+            </div>
+            {% if details != blank %}
+                <div class="product__description flow-content details-specific">
+                    <button class="button--collapsible{% if section.settings.details-collapsed == false %} button--collapsible--active" aria-expanded="true"{% else %}" aria-expanded="false"{% endif %}>Details</button>
+                    <div class="product__description-text{% if section.settings.description-collapsed == false %} active{% endif %}">{{ details }}</div>
+                </div>
+            {% endif %}
+            <div class="product__description">
+                <button class="button--collapsible{% if section.settings.recommendation-collapsed == false %} button--collapsible--active" aria-expanded="true"{% else %}" aria-expanded="false"{% endif %}>Recommendation</button>
+                <div class="product__description-text recommendation-container{% if section.settings.recommendation-collapsed == false %} active{% endif %}">
+                    
+                </div>
+            </div>
+        </div>    
+    </div>
+    <div id="product-reviews" class="product__reviews flow-content">
+        {% render 'judgeme_widgets', widget_type: 'judgeme_review_widget', concierge_install: false, product: product %}
+    </div>
+    {% render 'fitting-guide-table' %}
+</section>
+
+
+{% schema %}
+
+{
+    "name": "Product details page",
+    "settings": [
+        {
+            "type": "checkbox",
+            "id": "details-collapsed",
+            "label": "Collapse details on start",
+            "default": false
+        },
+        {
+            "type": "checkbox",
+            "id": "recommendation-collapsed",
+            "label": "Collapse recommendations on start",
+            "default": false
+        }
+    ]
+}
+
+{% endschema %}
+
+{% style %}
+
+{% endstyle %}
+
+
+{% javascript %}
+{% endjavascript %}

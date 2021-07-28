@@ -1,0 +1,205 @@
+{% assign images = "" %}
+{% assign image_sliders = "" %}
+{% assign image_nav-indicators = "" %}
+{% assign min_aspect_ratio = 0 %}
+{% assign no_picture_flag = false %}
+
+{% if product.images.size == 0 and product.options_by_name['Pattern'].values == blank %}
+    {% assign no_picture_flag = true %}
+{% endif %}
+
+
+{% if product.options_by_name['Pattern'].values.size != blank %}  {% comment %} means there are patterns {% endcomment %}
+    {% for pattern in product.options_by_name['Pattern'].values %}
+        {% assign sorted_images = product.images | sort: 'src' %}
+        {% assign image_index = 0 %}
+
+        {% assign temp_images = "" %}
+        {% assign temp_image_sliders = "" %}
+        {% assign temp_image_nav-indicators = "" %}
+        {% assign max_img_count = 4 %}
+
+        
+            {% for image in sorted_images %}
+                {% if forloop.first == false %}
+                    {% if image.aspect_ratio > min_aspect_ratio %}
+                        {% assign min_aspect_ratio = image.aspect_ratio %}
+                    {% endif %}
+                {% else %}
+                    {% assign min_aspect_ratio = image.aspect_ratio %}    {% comment %} we take the first image aspect ratio as default   {% endcomment %}
+                {% endif %}
+                    
+                {% if image.src contains pattern %}
+                        {% capture captured_html %}
+                            <li class="product__main-image-slide{% if image_index == 0 %}{{" product__main-image-slide--active"}}{% endif %}" data-index="{{ image_index }}"><img class="product__main-image lazyload" alt="{{ image.alt | escape }}" src="{{ image.src | img_url: '200x' }}"
+                                data-srcset="{{ image.src | img_url: 'x800' }} 420w,
+                                            {{ image.src | img_url: 'x1024' }} 1024w,
+                                            {{ image.src | img_url: 'x2048' }} 1920w,
+                                            {{ image.src | img_url: 'x2500' }} 2500w" data-sizes="auto"></li>
+                        {% endcapture %}
+                        {% assign temp_images = temp_images | append: captured_html %}
+
+                        {% capture captured_html %}
+                        
+                        <li class="product__image-slide{% if image_index == 0 %}{{" product__image-slide--active"}}{% endif %}" data-product-id="{{ product.id }}" data-pattern="{{ pattern }}" data-index="{{ image_index }}">
+                        <img class="product__image lazyload" alt="{{ image.alt }}" src="{{ image.src | img_url: '50x' }}" data-srcset="{{ image.src | img_url: 'x200' }} 420w,
+                                                                                                                                        {{ image.src | img_url: 'x400' }} 1024w,"> 
+                        </li>
+                        {% endcapture %}
+
+                        {% assign temp_image_sliders = temp_image_sliders | append: captured_html %}
+                        
+
+                        {% capture captured_html %}
+                            <li class="product__nav-indicator{% if image_index == 0 %}{{" product__indicator--active"}}{% endif %}" data-product-id="{{ product.id }}" data-pattern="{{ pattern }}" data-index="{{ image_index }}"></li>
+                        {% endcapture %}
+                        
+                        {% assign temp_image_nav-indicators = temp_image_nav-indicators | append: captured_html %}
+                        {% assign image_index = image_index |  plus: 1 %}
+
+                        {% assign max_img_count = max_img_count | minus: 1 %}
+                        {% if max_img_count == 0 %}
+                            {% break %}
+                        {% endif %}
+                {% endif %}
+            {% endfor %}
+        
+        {% if temp_images == "" %}  {%- comment -%} Means there is no image for this pattern {%- endcomment -%}
+            {% capture captured_html %}
+                <li id="{{ product.id }}-{{ pattern }}-{{ image_index }}" class="product__main-image-slide product__main-image-slide--active"><img class="product__main-image" alt="No image available" src="{{ 'no-image.png' | img_url: '200x' }}"></li>
+            {% endcapture %}
+            {% assign temp_images = captured_html %}
+        {% endif %}
+
+        {% capture captured_html %}
+                <ul class="product__main-image-frame{% if forloop.first == true %}{{" product__main-image-frame--active"}}{% endif %}" data-aspect-ratio="{{ min_aspect_ratio }}">
+        {% endcapture %}
+        {% assign images = images | append: captured_html %}
+        {% assign images = images | append: temp_images %}
+        {% assign images = images | append: '</ul>' %}
+        
+        {% if temp_image_sliders == "" %} {%- comment -%} We create an empty li for no picture product {%- endcomment -%}
+            {% capture captured_html %}
+            <li class="product__image-slide product__image-slide--active" data-product-id="{{ product.id }}" data-pattern="{{ pattern }}" data-index="{{ image_index }}">
+                <img class="product__image" alt="No image available" src="{{ 'no-image.png' | img_url: '200x' }}">
+            </li>
+            {% endcapture %}
+            {% assign temp_image_sliders = captured_html %}
+        {% endif %}
+
+        {% capture captured_html %}
+            <ul id="thumb-{{ product.id }}-{{ pattern }}" class="product__image-slider{% if forloop.first == true %}{{" product__image-slider--active"}}{% endif %}" data-index="{{ forloop.index0 }}">
+        {% endcapture %}
+        {% assign image_sliders = image_sliders | append: captured_html %}
+        {% assign image_sliders = image_sliders | append: temp_image_sliders %}
+        {% assign image_sliders = image_sliders | append: '</ul>' %}
+
+        {% capture captured_html %}
+            <ul id="indi-{{ product.id }}-{{ pattern }}" class="indicator-nav product__indicator-nav{% if forloop.first == true %}{{" product__indicator-nav--active"}}{% endif %}{% if image_index <= 1 %} {{" product__button--disabled"}}{% endif %}">
+            
+                {% if temp_image_nav-indicators != "" %}
+                    {{ temp_image_nav-indicators}}
+                {% else %}
+                    <li class="product__nav-indicator product__indicator--active product__button--disabled" data-product-id="{{ product.id }}" data-pattern="{{ pattern }}" data-index="{{ image_index }}"></li>
+                {% endif %}
+            </ul>
+        {% endcapture %}
+        {% assign image_nav-indicators = image_nav-indicators | append: captured_html %}
+    {% endfor %}
+{% elsif product.images != blank %}
+
+    {% assign temp_images = "" %}
+    {% assign temp_image_sliders = "" %}
+    {% assign temp_image_nav-indicators = "" %}
+    {% assign image_index = 0 %}
+    
+
+    {% for image in product.images limit: 4 %}
+        {% capture captured_html %}
+            <li class="product__main-image-slide{% if forloop.first == true %}{{" product__main-image-slide--active"}}{% endif %}" data-index="{{ forloop.index0 }}"><img class="product__main-image lazyload" alt="{{ image.alt | escape }}" src="{{ image.src | img_url: '200x' }}"
+                        data-srcset="{{ image.src | img_url: 'x800' }} 420w,
+                                    {{ image.src | img_url: 'x1024' }} 1024w,
+                                    {{ image.src | img_url: 'x2048' }} 1920w,
+                                    {{ image.src | img_url: 'x2500' }} 2500w" data-sizes="auto"></li>
+        {% endcapture %}
+        {% assign temp_images = temp_images | append: captured_html %}
+
+        {% capture captured_html %}
+            <li class="product__image-slide{% if forloop.first == true %}{{" product__image-slide--active"}}{% endif %}" data-product-id="{{ product.id }}" data-index="{{ forloop.index0 }}">
+            <img class="product__image lazyload" alt="{{ image.alt }}" src="{{ image.src | img_url: '50x' }}" data-srcset="{{ image.src | img_url: 'x200' }} 420w,
+                                                                                                                            {{ image.src | img_url: 'x400' }} 1024w,"> 
+            </li>
+        {% endcapture %}
+        {% assign temp_image_sliders = temp_image_sliders | append: captured_html %}
+
+        {% capture captured_html %}
+            <li class="product__nav-indicator{% if forloop.first == true %}{{" product__indicator--active"}}{% endif %}" data-product-id="{{ product.id }}" data-index="{{ forloop.index0 }}"></li>
+        {% endcapture %}
+        {% assign temp_image_nav-indicators = temp_image_nav-indicators | append: captured_html %}
+
+        {% assign image_index = image_index | plus: 1 %}
+    {% endfor %}
+    
+    {% capture captured_html %}
+            <ul class="product__main-image-frame product__main-image-frame--active" data-aspect-ratio="{{ min_aspect_ratio }}">
+    {% endcapture %}
+    {% assign images = images | append: captured_html %}
+    {% assign images = images | append: temp_images %}
+    {% assign images = images | append: '</ul>' %}
+
+    {% if temp_image_sliders == "" %} {%- comment -%} We create an empty li for no picture product {%- endcomment -%}
+        {% capture captured_html %}
+        <li class="product__image-slide product__image-slide--active" data-product-id="{{ product.id }}" data-index="{{ image_index }}">
+            <img class="product__image" alt="No image available" src="{{ 'no-image.png' | img_url: '200x' }}">
+        </li>
+        {% endcapture %}
+        {% assign temp_image_sliders = captured_html %}
+    {% endif %}
+
+    {% capture captured_html %}
+        <ul id="thumb-{{ product.id }}" class="product__image-slider product__image-slider--active" data-index="{{ forloop.index0 }}">
+    {% endcapture %}
+    {% assign image_sliders = image_sliders | append: captured_html %}
+    {% assign image_sliders = image_sliders | append: temp_image_sliders %}
+    {% assign image_sliders = image_sliders | append: '</ul>' %}
+
+    {% capture captured_html %}
+        <ul id="indi-{{ product.id }}" class="indicator-nav product__indicator-nav product__indicator-nav--active{% if image_index <= 1 %} {{" product__button--disabled"}}{% endif %}">
+
+            {% if temp_image_nav-indicators != "" %}
+                {{ temp_image_nav-indicators}}
+            {% else %}
+                <li class="product__nav-indicator product__indicator--active product__button--disabled" data-product-id="{{ product.id }}" data-index="{{ image_index }}"></li>
+            {% endif %}
+        </ul>
+    {% endcapture %}
+    {% assign image_nav-indicators = image_nav-indicators | append: captured_html %}
+{% endif %}
+
+
+<div class="product__main-images" data-aspect-ratio={{ min_aspect_ratio }}>
+    {%- comment -%}
+    <button class="button--left productPage__button--left center-vertically{% if section.settings.hide-buttons == true %} sm--visually-hidden{% endif %}" disabled>{% render 'icon-arrow-left' %}</button>
+    <button class="button--right productPage__button--right center-vertically{% if section.settings.hide-buttons == true %} sm--visually-hidden{% endif %}" disabled>{% render 'icon-arrow-right' %}</button>
+    {%- endcomment -%}
+    {% if no_picture_flag == true %}
+        <ul class="product__main-image-frame product__main-image-frame--active">
+            <li class="product__main-image-slide product__main-image-slide--active" data-product-id="{{ product.id }}" data-pattern="" data-index="0">
+                <img class="product__main-image" alt="No image available" src="{{ 'no-image.png' | img_url: 'large' }}">
+            </li>
+        </ul>
+    {% else %}
+        {{ images }}
+    {% endif %}           
+    
+    <div class="product__indicator-navbars">
+        {{ image_nav-indicators }}
+    </div>
+</div>
+<div class="product__thumbnails-wrapper">
+    <!-- <button class="button--up product__button--up" disabled>{% render 'icon-arrow-up' %}</button> -->
+    <div class="product__thumbnails">
+        {{ image_sliders }}
+    </div>
+    <!-- <button class="button--down product__button--down" disabled>{% render 'icon-arrow-down' %}</button> -->
+</div>

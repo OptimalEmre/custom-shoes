@@ -1,0 +1,251 @@
+{%- if
+    settings.social_twitter_link != blank
+    or settings.social_facebook_link != blank
+    or settings.social_pinterest_link != blank
+    or settings.social_instagram_link != blank
+    or settings.social_tumblr_link != blank
+    or settings.social_snapchat_link != blank
+    or settings.social_youtube_link != blank
+    or settings.social_vimeo_link != blank
+    or request.page_type == 'article'
+    or request.page_type == 'blog'
+  -%}
+    {%- assign social_icons = true -%}
+  {%- endif -%}
+
+{%- if section.settings.show_payment_icons -%}
+    {%- if shop.enabled_payment_types != empty -%}
+        {%- assign show_payment_icons = true -%}
+    {%- endif -%}
+{%- endif -%}
+
+{% assign year = 'now' | date: "%Y" %}
+{% assign copyrightText = section.settings.copyright | replace: '#YEAR#', year %}
+{% assign isNewsletterEnabled = false %}
+{% assign bottomLinks = "" %}
+{% for block in section.blocks %}
+    {% if block.type == 'newsletter' %}
+        {% assign isNewsletterEnabled = true %}
+        {% assign newsletterText = block.settings.title %}
+    {% elsif block.type == 'bottom_link' %}
+        {% capture linkCode %}<li class="footer__bottom-link-item"><a class="footer__bottom-link" aria-label="{{ block.settings.title }}" href="{{ block.settings.url }}">{{ block.settings.title }}</a></li>{% endcapture %}
+        {% assign bottomLinks = bottomLinks | append: linkCode %}
+    {% endif %}
+    
+{% endfor %}
+
+<footer class="site-footer critical-hidden" role="contentinfo" data-section-id="{{ section.id }}" data-section-type="footer-section"></footer>
+
+    <div class="container footer__container">
+                           
+        <ul class="footer__menu" aria-label="Footer menu">
+            
+            {% for link in linklists[section.settings.link_list].links %}
+                <li> 
+                    
+                    {% if link.active == false %}
+                        <a class="footer__menu-link" href="{{ link.url }}">{{ link.title }}</a>
+                    {% else %}
+                        <p class="footer__menu-link--active" aria-current="page"><strong>{{ link.title }}</strong></p>
+                    {% endif %}
+                
+                </li>
+            {% endfor %}
+            
+        </ul>
+        
+        <div class="footer__contact">
+            <p class="footer__subheading">Contact Us:</p>
+            <p><a aria-label="email" href="mailto:email@beachbaby.com">email@beachbaby.com</a></p>
+            
+            {%- assign socials = "Facebook Twitter Pinterest Instagram Tumblr Snapchat YouTube Vimeo" | split: ' ' -%}
+
+            <ul class="footer__social_links">
+                {%- for social in socials -%}
+                    {%- assign social_link = social | prepend: 'social_' | downcase -%}
+                    {%- assign icon_link = social | prepend: 'icon-' | downcase -%}
+                    
+                    {%- if settings[social_link] != blank -%}
+                    <li class="footer__social-link-item">
+                        <a class="footer__social-link" href="{{ settings[social_link] | escape }}" aria-label="Our {{social}} page">
+                        {%- include icon_link -%}
+                        </a>
+                    </li>
+                    {%- endif -%}
+                {%- endfor -%}
+    
+                {%- if request.page_type == 'blog' or request.page_type == 'article' -%}
+                    <li>
+                    <a class="social-icons__link" href="{{ shop.url }}{{ blog.url }}.atom">
+                        {% include 'icon-rss' %}
+                        <span class="icon__fallback-text">RSS</span>
+                    </a>
+                    </li>
+                {%- endif -%}
+            </ul>
+                
+            
+        </div>
+        <div class="footer__newsletter">
+            
+            {% if isNewsletterEnabled == true %}
+                                
+                {%- assign formId = 'ContactFooter' -%}
+                {% form 'customer', id: formId, novalidate: 'novalidate' %}
+                    
+                    <input type="hidden" name="contact[tags]" value="newsletter">
+                    <div class="form__items {% if form.errors %} form__items--error{% endif %}">
+                        {%- if form.posted_successfully? -%}
+                            <p class="form__message form__message--success" tabindex="-1" data-form-status>
+                                Thanks for subscribing!
+                            </p>
+                        {% else %}
+                            <label for="{{ formId }}-email" class="form__input--label">{{ newsletterText }}</label>
+                        {%- endif -%}
+                        
+                        <input type="email"
+                            name="contact[email]"
+                            id="{{ formId }}-email"
+                            class="form__input newsletter__input{% if form.errors %} form__input--error{% endif %}"
+                            value="{{ form.email }}"
+                            aria-label="Email address"
+                            aria-required="true"
+                            required
+                            autocorrect="off"
+                            autocapitalize="off"
+                            {% if form.errors %}
+                                aria-invalid="true"
+                                aria-describedby="{{ formId }}-email-error"
+                                data-form-status
+                            {% endif %}>
+                        
+                        <button type="submit" class="form__button newsletter__submit" name="commit" >
+                            Subscribe
+                        </button>
+                        {% if form.errors %}
+                        <span id="{{ formId }}-email-error" class="form__error-message">
+                            <span class="screen-reader-only">Error</span>
+                            {% include 'icon-error' %}
+                            <span class="footer__newsletter-error">Invalid email.</span>
+                        </span>
+                    {% endif %}
+                    
+                    </div>
+                    
+                {% endform %}
+                
+                
+            {% endif %}
+            
+        </div>
+        
+        <div class="footer__bottom">
+            {% if bottomLinks != "" %}
+                <ul class="footer__bottom-link-list">
+                    {{ bottomLinks }}
+                </ul>
+            {% endif %}
+            <p class="footer__copyright">{{ copyrightText }}</p>
+
+            {%- capture payment_icon_markup -%}
+                    {%- if show_payment_icons -%}
+                        <div class="footer__payment-icons">
+                            <span class="screen-reader-only">Accepted payment methods</span>
+                            <ul class="footer__payment-icon-list">
+                                {%- for type in shop.enabled_payment_types -%}
+                                    <li class="footer__payment-icon-list-item">
+                                        {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
+                                    </li>
+                                {%- endfor -%}
+                            </ul>
+                        </div>
+                    {%- endif -%}
+                {%- endcapture -%}
+                {% if payment_icon_markup != "" %}
+                    {{ payment_icon_markup }}
+                {% endif %}
+
+        </div>
+        
+        
+
+        
+    </div>
+    
+</footer>
+
+{% schema %}
+
+{
+    "name": "Footer",
+    "settings": [
+        {
+            "type":      "color",
+            "id":        "section_bgcolor",
+            "label":     "Section background color"            
+        },
+        {
+            "type": "link_list",
+            "id": "link_list",
+            "label": "Choose menu link"                     
+        },
+        {
+            "type": "text",
+            "id": "copyright",
+            "label": "Copyright text",
+            "info": "place the #YEAR# tag wherever you like in the text to display the year"
+        },
+        {
+            "type": "checkbox",
+            "id": "show_payment_icons",
+            "label": "Show payment icons",
+            "default": false
+         }
+
+        
+    ],
+    "blocks": [
+    {
+        "type": "newsletter",
+        "limit": 1,
+        "name": "Newsletter signup",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "info": "Subscribers will be added to your “accepts marketing” [customer list.](/admin/customers?query=&accepts_marketing=1)",
+            "default": "Newsletter"
+          }
+          
+        ]
+      },
+      {
+        "type": "bottom_link",
+        "name": "Bottom link",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "title"
+          },
+          {
+            "type": "url",
+            "id": "url",
+            "label": "URL"
+         }
+        ]
+      }
+    ]
+}
+
+{% endschema %}
+
+{% style %}
+.footer__container {
+    background-color: {{ section.settings.section_bgcolor }};
+}
+{% endstyle %}
+
+{% javascript %}
+{% endjavascript %}

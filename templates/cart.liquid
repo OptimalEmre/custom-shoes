@@ -1,0 +1,14 @@
+{% layout 'theme.alternate' %}
+<div id="errorMessageBox" class="error-message-box centered"></div>
+<form action="{{ routes.cart_url }}" method="post" novalidate class="cart">
+    <div class="shopping-cart--static flow-content">
+        <div class="back-clear-buttons">
+            <button class="main-button cart__button--clear">Clear Cart</button>
+            
+        </div>
+        <h2 class="section-heading cart__heading">Your Cart</h2>
+        <div class="cart__proceed-button-wrapper">
+            <button type="submit" name="checkout" class="main-button cart__proceed-button">Proceed to Checkout</button>
+        </div>
+    </div>
+</form>

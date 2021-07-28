@@ -1,0 +1,46 @@
+{% if criteria == null %}
+    {% assign criteria = 'pattern' %}
+{% endif %}
+
+{% assign criteriaValues = product.options_by_name[criteria].values %}
+{% assign fillValues = product.options_by_name[fillWith].values %}
+{% assign optionsArray = product.options %}
+{% assign optionIndex = '' %}
+
+{% for option in optionsArray %}
+    {% assign optionCap = option | capitalize %}
+    {% assign criteriaCap = criteria | capitalize %}
+
+    {% if optionCap == criteriaCap %}
+        {% assign optionIndex = 'option' | append: forloop.index %}
+    {% endif %}
+{% endfor %}
+
+    {% if limit == blank or limit > 50 %}
+        {% assign limit = 50 %}
+    {% endif %}
+
+    {% if fillValues != blank %}
+            {% render 'size-select-box-labels', product: product, criteria: criteria %}
+            {% for value in criteriaValues %}
+                {% assign selectedVariants = product.variants | where: optionIndex, value %}
+                    {% render 'size-boxes', variants: selectedVariants, fillValues: fillValues, index: forloop.index0 %}
+                    <select name="select-{{product.id}}-{{ value }}" id="{{ value }}-productSelect{{product.id}}" class="collection__size product__size{% if forloop.first %} product__size--active {% endif %}">
+                        <option value="0" selected>Size</option>
+                        
+                            {% for variant in selectedVariants %}
+                                
+                                {% if variant.available %}
+                                    <option value="{{ variant.id }}">
+                                        {{ fillValues[forloop.index0] }}
+                                    </option>
+                                {% else %}
+                                    <option disabled>
+                                        {{ fillValues[forloop.index0] }} (not available)
+                                    </option>
+                                {% endif %}
+                            {% endfor %}
+                    </select>
+            {% endfor %}
+        </form>
+    {% endif %}

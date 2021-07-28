@@ -1,0 +1,162 @@
+<section class="carousel">
+    <div class="carousel__slider">
+        
+        <button class="button--left carousel__button--left{% if section.settings.hide-buttons == true %} sm--visually-hidden{% endif %}">{% render 'icon-arrow-left' %}</button>
+        <button class="button--right carousel__button--right{% if section.settings.hide-buttons == true %} sm--visually-hidden{% endif %}">{% render 'icon-arrow-right' %}</button>
+        <ul class="carousel__frame" data-autorotate="{{ section.settings.is-autorotate }}" data-rotation-delay="{% if section.settings.is-autorotate == true %}{{ section.settings.slide-duration }}{% else %}0{% endif %}">
+            {% assign firstSlideText = "" %}
+
+            {% for block in section.blocks %}
+                {% if forloop.first == true %}
+                    {% if block.settings.cta-text != '' %}
+                        {% assign firstSlideText = block.settings.cta-text %}
+                    {% else %}
+                        {% assign firstSlideText = 'BeachBaby Swimwear' %}   
+                    {% endif %}
+                    
+                {% endif %}
+                <li class="carousel__slide{% if forloop.first == true %}{{ ' carousel__slide--active' }}{% endif %}">
+                    {% if section.settings.is-first-text-default == false %}
+                        <div class="carousel__cta-block">
+                            <h1 class="carousel__cta-header carousel__cta-header--animation">
+                                {% if block.settings.cta-text != "" %}
+                                    {{ block.settings.cta-text }}
+                                {% else %}
+                                    Beach Baby Swimwear
+                                {% endif %}
+                            </h1>
+                            <a href="#our_quality" class="button main-button button--carousel button--carousel--animation">{{ section.settings.button-text }}</a>
+                        </div>
+                    {% endif %}
+                    <picture>
+                        {% if block.settings.landscape-image != blank %}
+                            {% assign landscapeImage = block.settings.landscape-image %}
+                        {% else %}
+                            {% assign landscapeImage = block.settings.portrait-image %}   
+                        {% endif %}
+
+                        <source media="(min-width: 1024px)"
+                        data-srcset="{{ landscapeImage | img_url: '1024x'}} 1x,
+                                        {{ landscapeImage | img_url: '2048x'}} 2x">
+                        <source media="(min-width: 800px)"
+                        data-srcset="{{ landscapeImage | img_url: '800x'}} 1x,
+                                        {{ landscapeImage | img_url: '1600x'}} 2x">
+                        <source media="(min-width: 550px)"
+                        data-srcset="{{ block.settings.portrait-image | img_url: '549x'}} 1x,
+                                        {{ block.settings.portrait-image | img_url: '1024x'}} 2x">
+
+                        <img class="carousel__image lazyload" src="{{ block.settings.portrait-image | img_url: '10x'}}" data-src="{{ block.settings.portrait-image | img_url: '600x', format: 'pjpg' }}" data-sizes="auto" alt="{{ block.settings.alt-text }}">
+                    </picture>
+                </li>
+                
+            {% endfor %}
+        </ul>
+        {% if section.settings.is-first-text-default == true%}
+            <div class="carousel__cta-block">
+                <h1 class="carousel__cta-header">{{firstSlideText}}</h1>
+                <a href="#quality-section" class="button main-button button--carousel">{{ section.settings.button-text }}</a>
+            </div>
+        {% endif %}
+        <div class="indicator-nav carousel__nav">
+            {% for block in section.blocks %}
+                <button class="nav-indicator carousel__nav-indicator{% if forloop.first == true %}{{ ' carousel__nav-indicator--active' }}{% endif %}"></button>
+            {% endfor %}
+        </div>
+        
+    </div>
+</section>
+
+
+{% schema %}
+
+{
+    "name": "Carousel",
+    "settings": [
+        {
+            "type": "checkbox",
+            "id": "is-autorotate",
+            "label": "Autorotate",
+            "default": false
+        },
+        {
+            "type": "checkbox",
+            "id": "is-first-text-default",
+            "label": "Use the first slide text for all slides",
+            "default": true
+        },
+        {
+            "type": "text",
+            "id": "button-text",
+            "label": "CTA Button text",
+            "default": "Shop Now"
+        },
+        {
+            "type": "range",
+            "id": "slide-duration",
+            "min": 3,
+            "max": 10,
+            "step": 1,
+            "unit": "sec",
+            "label": "Show each slide for:",
+            "default": 3
+        },
+        {
+            "type": "checkbox",
+            "id": "hide-buttons",
+            "label": "Hide arrow buttons on mobile devices",
+            "default": false
+        }
+    ],
+    "blocks": [
+        {
+            "type": "select",
+            "name": "Slide",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "portrait-image",
+                    "label": "Portrait Framed Image"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "landscape-image",
+                    "label": "Landscape Framed Image"
+                },
+                {
+                    "type": "text",
+                    "id": "alt-text",
+                    "label": "Image alt text"
+                },
+                {
+                    "type": "text",
+                    "id": "cta-text",
+                    "label": "CTA text",
+                    "default": "BeachBaby Swimwear"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Carousel",
+            "category": "Image Tools"
+        }
+    ]
+}
+
+{% endschema %}
+
+{% style %}
+
+{% if section.settings.is-first-text-default == true %}
+    .carousel__cta-block {
+        z-index: 100;
+    }
+{% endif %}
+
+
+{% endstyle %}
+
+{% javascript %}
+{% endjavascript %}
+

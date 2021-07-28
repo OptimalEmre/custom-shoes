@@ -1,0 +1,35 @@
+
+{% for pattern in product.options_by_name['Pattern'].values %}
+    {% assign hasSize = true %}
+    {% assign patternVariantId = 0 %}
+    {% assign patternAvailable = "" %}
+    {% assign patternPrice = "" %}
+    {% assign patternCompareAtPrice = "" %}
+
+    {% unless product.options contains 'Size' %}
+        {% assign hasSize = false %}
+    {% endunless %}
+
+    {% for variant in product.variants %}
+        {% if variant.title contains pattern %}
+            {% assign patternVariantId = variant.id %}
+            {% assign patternAvailable = variant.available %}
+            {% assign patternPrice = variant.price | money %}
+            {% assign patternCompareAtPrice = variant.compare_at_price | money_without_currency %}
+            {{}}
+        {% endif %}
+    {% endfor %}
+
+    
+
+    <button class="product__pattern-indicator{% if forloop.first %}{{" product__pattern--active"}}{% endif %}" data-name="{{pattern}}" data-index="{{forloop.index0}}"
+                                {% if hasSize == false and patternVariantId != 0 %} data-product-id="{{ patternVariantId }}"
+                                    data-available="{% if patternAvailable == true %}1{% else %}0{% endif %}"{% endif %}
+                                    data-price="{{ patternPrice }}"
+                                    data-compare="{{ patternCompareAtPrice }}">
+        
+    
+        <img class="product__pattern-image" src="{{ pattern | append: '.png' | file_img_url }}" alt="{{ product.title | append: " " | append: pattern.title }}">
+    </button>
+    
+{% endfor %}

@@ -1,0 +1,9 @@
+{% if variants.size != 0 %}
+    <ul class="product__size-box-container{% if index == 0 %} product__size-box-container--active{% endif %}" data-index={{ index }}>
+        {% for variant in variants %}
+            <li>
+                <button class="product__size-box-indicator" data-id="{{ variant.id }}" data-index="{{ forloop.index0 }}" {% if variant.available != true %}disabled="true"{% endif %}>{{ fillValues[forloop.index0] }}</button>
+            </li>
+            {% endfor %}
+    </ul>
+{% endif %}

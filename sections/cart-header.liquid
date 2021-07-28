@@ -1,0 +1,93 @@
+<header class="site-header" role="Header" data-section-id="{{ section.id }}" data-section-type="header">
+    <div class="container header__container">
+        <div id="errorMessageBox" class="error-message-box centered"></div>
+        
+        {% comment %}  Notification bar {% endcomment %}
+
+        {% if section.settings.notification-enable and section.settings.notification-text != blank %}
+            <div class="notification" aria-label="Notification bar">
+                {% if section.settings.notification-link != blank %}
+                    <a href="{{ section.settings.notification-link }}" class="notification__link" aria-liabel="Notification details">
+                        <span class="notification__text">{{ section.settings.notification-text | escape }}</span>
+                    </a>
+                {% else %}
+                    <span class="notification__text">{{ section.settings.notification-text | escape }}</span>
+                {% endif %}
+                {% if section.settings.is-closable == true %}
+                    <button class="notification__close" aria-label="Close notification">
+                        {% render 'icon-notification-close' %}
+                    </button>
+                {% endif %}
+            </div>
+        {% endif %}
+
+        
+        <a aria-label="Homepage" href="{{ routes.root_url }}"><div class="header__logo">{{ 'logo.svg' | asset_url  | img_tag: 'Beachbaby Swimwear' }}</div></a>
+    </div>
+</header>
+
+{% schema %}
+
+{
+    "name": "Cart-header",
+    "settings": [
+        {
+            "type": "header",
+            "content": "Notification Bar"
+        }, {
+            "type": "checkbox",
+            "id": "notification-enable",
+            "label": "Enable Notification Bar"
+        }, {
+            "type": "checkbox",
+            "id": "is-closable",
+            "label": "Closable"
+        }, {
+            "type": "text",
+            "id": "notification-text",
+            "label": "Text"
+        }, {
+            "type": "url",
+            "id": "notification-link",
+            "label": "Link",
+            "info": "Optional"
+        }, {
+            "type": "color",
+            "id": "notification-background-color",
+            "label": "Background color",
+            "default": "#606060"
+        }, {
+            "type": "color",
+            "id": "notification-text-color",
+            "label": "Text color",
+            "default": "#ccc"
+        }, {
+            "type": "color",
+            "id": "notification-link-color",
+            "label": "Link color",
+            "default": "#ddd"
+        }
+    ]
+}
+
+{% endschema %}
+
+{% style %}
+
+.notification {
+    background-color: {{section.settings.notification-background-color}};
+    color: {{section.settings.notification-text-color}};
+}
+
+.notification a {
+    color: {{section.settings.notification-link-color}};
+}
+
+.icon-notification-close {
+    fill: {{section.settings.notification-link-color}};
+}
+
+{% endstyle %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,230 @@
+{% assign max_product_limit = section.settings.max_product %}
+{% assign max_pattern_limit = section.settings.max_pattern %}
+{% assign max_image_limit = section.settings.max_image %}
+
+{% paginate collection.products by section.settings.max_product_per_page %}
+    <section class="lg--fixed-width--secondary frontpage-collection collections">
+        
+        <h1 class="section-heading frontpage-collection_heading">{{ section.settings.heading }}</h1>
+        {% if section.settings.subheading != blank %}
+            <p class="section-heading section-subheading frontpage-collection_heading">{{ section.settings.subheading }}</p>
+        {% endif %}
+        {% if collections.all.products.size == 0 %}
+            {{ "No products are avaliable" }}
+        {% else %}
+            
+            {% for product in collection.products %}
+                
+
+                {% assign image_index = 0 %}      {% comment %} We keep the image index for each product's image list {% endcomment %}
+                {% assign min_aspect_ratio = 0 %}
+                {% assign pattern_index = 0 %}
+                {% assign patterns = "" %}
+                
+                {% capture sorted_images_with_pattern_buttons %}
+                    
+                    {% comment %} Pass info of each pic in carousel to front end. {% endcomment %}
+                    {% for pattern in product.options_by_name['Pattern'].values limit:max_pattern_limit %}               {% comment %} We get the patterns {% endcomment %}
+                        
+                        {% assign sorted_images = product.images | sort: 'src' %}
+                        {% assign max_image_count = 0 %}
+
+                        {% for image in sorted_images %}                   {% comment %} and check which image belongs to which pattern. {% endcomment %}
+                            {% if image == blank or max_image_count == max_image_limit %}
+                                {% break %}
+                            {% endif %}
+
+
+                            {% if image.src contains pattern and image.aspect_ratio <= 1.0 %}       {% comment %} If the image belongs to the current pattern
+                                                                                                                        and is vertical or square,
+                                                                                                                        we get the get the following properties of the image
+                                                                                                                        and create the picture and img tags filled with
+                                                                                                                        requiered data attributes. {% endcomment %}
+                                
+                                    <li class="frontpage-collection__image-slide{% if image_index == 0 %}{{" frontpage-collection__slide-active"}}{% endif %}" data-index="{{ image_index }}" data-pattern="{{ pattern }}" tabindex="-1">
+                                        <a href="{{ product.url }}"  tabindex="-1">
+                                            {% if forloop.first == false %}
+                                                <img class="frontpage-collection__image lazyload alt="{{ image.alt }}" src="{{ image.src | img_url: '50x' }}"
+                                                                                                                data-srcset="{{ image.src | img_url: 'x840' }} 420w,
+                                                                                                                            {{ image.src | img_url: 'x1024' }} 1024w,
+                                                                                                                            {{ image.src | img_url: 'x2048' }} 1920w,
+                                                                                                                            {{ image.src | img_url: 'x2500' }} 2500w" data-sizes="auto"  tabindex="-1">
+                                            {% else %}
+                                                <img class="frontpage-collection__image lazyload alt="{{ image.alt }}" src="{{ image.src | img_url: '200x' }}"
+                                                                                                                data-srcset="{{ image.src | img_url: 'x840' }} 420w,
+                                                                                                                            {{ image.src | img_url: 'x1024' }} 1024w,
+                                                                                                                            {{ image.src | img_url: 'x2048' }} 1920w,
+                                                                                                                            {{ image.src | img_url: 'x2500' }} 2500w" data-sizes="auto" tabindex="-1">
+                                            {% endif %}
+                                        </a>
+                                    </li>
+                                
+                                
+                                
+
+                                {% assign image_index = image_index |  plus: 1 %}
+                                {% assign max_image_count = max_image_count |  plus: 1 %}
+
+                                {% if forloop.first == false %}
+                                    {% if image.aspect_ratio > min_aspect_ratio %}
+                                        {% assign min_aspect_ratio = image.aspect_ratio %}
+                                    {% endif %}
+                                {% else %}
+                                    {% assign min_aspect_ratio = image.aspect_ratio %}    {% comment %} we take the first image aspect ratio as default   {% endcomment %}
+                                {% endif %}
+                                
+                            {% endif %}
+                        {% endfor %}
+
+                        {% comment %}   {% endcomment %} 
+                        {% if image_index > pattern_index %}  {% comment %} Means we have a new pattern with images and we will append the related pattern button code at the end of ##ENDOFIMAGES## {% endcomment %}
+                            ##ENDOFIMAGES##
+                            <button class="frontpage-collection__pattern-indicator{% if pattern_index == 0 %}{{" frontpage-collection__pattern-active"}}{% endif %}" data-name="{{pattern}}" data-index="{{ pattern_index }}">
+                                <img class="frontpage-collection__pattern-image" src="{{ pattern | append: '.png' | file_img_url }}" alt="{{ product.title | append: " " | append: pattern.title }}">
+                            </button>
+                            ##ENDOFPATTERN##
+                            {% assign pattern_index = image_index %} {% comment %}new pattern starting point is the image index {% endcomment %}
+
+                        {% endif %}
+                    {% endfor %}
+                {% endcapture %}
+
+                {% comment %}   we are seperating each pattern and its images and then place them into 2 different variables:
+                                images: we put all the image code (images_and_patterns[0]) in it and then print it in frontpage-collection__slider
+                                pattern_buttons: we put all the pattern button code (images_and_patterns[1]) in it and then print it in the frontpage-collection__pattern-nav{% endcomment %}
+                
+                {% assign images = "" %}
+                {% assign pattern_buttons = "" %}
+                {% assign pattern_array = sorted_images_with_pattern_buttons | split: "##ENDOFPATTERN##" %}
+                {% for each_pattern in pattern_array %}
+                    {% assign images_and_pattern_buttons = each_pattern | split: "##ENDOFIMAGES##" %}
+
+                    {% assign images = images | append: images_and_pattern_buttons[0] %}
+                    {% assign pattern_buttons = pattern_buttons | append: images_and_pattern_buttons[1] %}
+                {% endfor %}
+                
+                
+                
+                
+                
+        <div id="#frontpage-product{{ forloop.index0 }}" class="frontpage-collection__product-box collection__box">
+            
+            <div class="frontpage-collection__image-frame collection__frame" id="frontpage-product{{ forloop.index0 }}" data-aspect-ratio="{{ min_aspect_ratio }}">
+                
+                
+                <button class="button--left frontpage-collection__button--left{% if section.settings.hide-buttons == true %} sm--visually-hidden{% endif %}" disabled>{% render 'icon-arrow-left' %}</button>
+                <button class="button--right frontpage-collection__button--right{% if section.settings.hide-buttons == true %} sm--visually-hidden{% endif %}" disabled>{% render 'icon-arrow-right' %}</button>
+                <ul class="frontpage-collection__image-slider">
+                    {% if images != blank %}
+                        {{ images }}
+                    {% elsif images == blank and product.images.size != 0 %} {%- comment -%} means there are no patterns but there are images {%- endcomment -%}
+                        {% for image in product.images %}
+                            <li class="frontpage-collection__image-slide{% if forloop.first == true %}{{" frontpage-collection__slide-active"}}{% endif %}" data-index="{{ forloop.index0 }}" data-pattern="{{ pattern }}"><a href="{{ product.url }}" tabindex="-1"><img class="frontpage-collection__image lazyload alt="{{ image.alt }}" 
+                                                        src="{{ image.src | img_url: '50x' }}" data-srcset="{{ image.src | img_url: 'x420' }} 420w,
+                                                                                                            {{ image.src | img_url: 'x1024' }} 1024w,
+                                                                                                            {{ image.src | img_url: 'x2048' }} 1920w,
+                                                                                                            {{ image.src | img_url: 'x2500' }} 2500w" tabindex="-1"></a>
+                            </li>
+                        {% endfor %}
+                    {% else %}
+                        <li class="frontpage-collection__image-slide frontpage-collection__slide-active" tabindex="-1"><a href="{{ product.url }}" tabindex="-1"><img class="frontpage-collection__image" alt="No picture" src="{{ 'no-pic.jpg' | img_url: 'large'}}" tabindex="-1"></a></li>
+                    {% endif %}
+                </ul>
+                
+                {% if product.tags contains 'Best Seller' %}
+                    <div class="tag--best-seller">Best Seller</div> 
+                {% endif %}
+                
+                
+        
+            </div>
+            <div class="collection__pattern-nav">
+                {{ pattern_buttons }}
+
+                {% assign pattern_count = pattern_array.size | minus: 1 %}
+                {% if pattern_count == max_pattern_limit and product.options_by_name['Pattern'].values.size > max_pattern_limit %}
+                    <a href="{{ product.url }}" class="frontpage-collection__pattern-indicator" aria-label="click to see more">{% render 'icon-plus' %}</a>
+                {% endif %}
+            </div>
+            <div class="collection__title-and-price">
+                <h3 class="section-heading collection__product-heading">{{ product.title }}</h3>
+                <p class="collection__product-price"><span class="product-price--compared">{{ product.compare_at_price_max | money_without_currency }}</span>{{ product.price | money }}</p>
+            </div>
+            <a href="{{ product.url }}" class="main-button button--frontpage">Shop Now</a>
+        </div>
+        
+            {% endfor %}
+        {% endif %}
+        {%- if paginate.pages > 1 -%}
+            {% render 'pagination', paginate: paginate %}
+        {%- endif -%}
+                
+    </section>
+    {% render 'fitting-guide-table' %}
+    
+
+{% endpaginate %}
+
+
+
+{% schema %}
+
+{
+    "name": "Collections pages",
+    "settings": [
+        {
+           "type": "text",
+           "id": "heading",
+           "default": "Our Collection",
+           "label": "Heading"
+        },
+        {
+           "type": "text",
+           "id": "subheading",
+           "label": "Subheading"
+        },        
+        {
+            "type": "range",
+            "id": "max_product_per_page",
+            "min": 1,
+            "max": 10,
+            "step": 1,
+            "label": "Number of products per page",
+            "default": 4
+        },
+        {
+            "type": "range",
+            "id": "max_pattern",
+            "min": 1,
+            "max": 10,
+            "step": 1,
+            "label": "Number of patterns to view for each product",
+            "default": 5
+        },
+        {
+            "type": "range",
+            "id": "max_image",
+            "min": 1,
+            "max": 10,
+            "step": 1,
+            "label": "Number of images to view for each pattern",
+            "default": 3
+        },
+        {
+            "type": "checkbox",
+            "id": "hide-buttons",
+            "label": "Hide arrow buttons on mobile devices",
+            "default": false
+        }
+    ]
+}
+
+{% endschema %}
+
+{% style %}
+
+{% endstyle %}
+
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,149 @@
+<section class="discount-banner-section" data-section-id="{{ section.id }}"></section>
+    <div class="lg--fixed-width">
+        <div class="discount-container">
+            <p class="screen-reader-only">Our swimwear is classic, timeless and eco-friendly. Check out our {{ 'now' | date: "%Y" }} collection.</p>
+            <div class="discount-banner__quality">
+                <img class="discount-svg" src="{{ section.settings.svg_file | escape | asset_url }}" alt="{{ section.settings.svg_alt | escape }}">
+            </div>
+            <div class="discount-banner lazyload animated" data-bg="{{ section.settings.discount_bgimage | img_url: '300x' }}"
+                    data-bgset="{% include 'bgset', image: section.settings.discount_bgimage %}"
+                    data-sizes="auto">
+                {% if section.settings.discount_heading != '' or section.settings.discount_subheading != '' %}
+                    <h2 class="discount-banner__heading animated">{{ section.settings.discount_heading | escape }}<p class="discount-banner__subheading">{{ section.settings.discount_subheading | escape }}</p></h2>
+                {% endif %}    
+            </div>
+        </div>
+            
+    </div>
+</section>
+    
+
+
+{% schema %}
+
+{
+    "name": "Discount Banner",
+    "settings": [
+        {
+            "type":      "color",
+            "id":        "section_bgcolor",
+            "label":     "Section background color"
+        },
+        {
+            "type": "image_picker",
+            "id": "discount_bgimage",
+            "label": "Discount background image"            
+        },
+        {
+            "type": "select",
+            "id": "image_position",
+            "label": "Image position",
+            "options": [
+              {
+                "value": "left",
+                "label": "Left"
+              },
+              {
+                "value": "right",
+                "label": "Right"
+              }
+            ],
+            "default": "left"
+        },
+        {
+            "type": "select",
+            "id": "bg_alignment",
+            "label": "Background image alignment",
+            "options": [
+              {
+                "value": "top center",
+                "label": "Top Center"
+              },
+              {
+                "value": "top left",
+                "label": "Top Left"
+              },{
+                "value": "top right",
+                "label": "Top Right"
+              },
+              {
+                "value": "center center",
+                "label": "Center Center"
+              },
+              {
+                "value": "center left",
+                "label": "Center Left"
+              },
+              {
+                "value": "center right",
+                "label": "Center Right"
+              },
+              {
+                "value": "bottom center",
+                "label": "Bottom Center"
+              },
+              {
+                "value": "bottom left",
+                "label": "Bottom Left"
+              },
+              {
+                "value": "bottom right",
+                "label": "Bottom Right"
+              }
+            ],
+            "default": "center center"
+        },
+        {
+            "type": "text",
+            "id": "discount_heading",
+            "label": "Discount heading"
+        },
+        {
+            "type": "text",
+            "id": "discount_subheading",
+            "label": "Discount subheading"
+        },
+        {
+            "type": "text",
+            "id": "svg_file",
+            "label": "SVG file name",
+            "info": "To support SVG files, upload your svg image into assets folder and type the file name",
+            "default": "quality.svg"
+        },
+        {
+            "type": "text",
+            "id": "svg_alt",
+            "label": "SVG image alt text",
+            "info": "Type the text in the svg file as the alt text for SEO and screen readers"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Discount banner",
+            "category": "Section"
+        }
+    ]
+}
+
+{% endschema %}
+
+{% style %}
+.discount-container {
+    background-color: {{ section.settings.section_bgcolor }};
+}
+
+.discount-banner {
+    {% if section.settings.image_position == 'left' %} order: 1{% endif %};
+    background-position: {{ section.settings.bg_alignment }};
+}
+{% if section.settings.image_position == 'left' %}
+.discount-banner__quality {
+    order: 2;
+}
+{% endif %}
+
+{% endstyle %}
+
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,72 @@
+<div class="fitting-guide__window-wrapper">
+    <div class="fitting-guide__window">
+        <button class="button--close fitting-guide__close-button">{% render 'icon-close' %}</button>
+        <h2 class="section-heading fitting-guide__heading">Fitting Guide</h2>
+        <p class="first">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</p>
+        <div class="fitting-guide__subheading-wrapper">
+            <p class="fitting-guide__subheading">
+                Swimwear
+            </p>
+            <p class="fitting-guide__measure">
+                Measured in inches
+            </p>
+        </div>
+        <hr class="fitting-guide__line">
+        <table class="fitting-guide__table" aria-label="You can use the fitting guide to find the matching size">
+            
+            <tr>
+                <th id="size">Size</th><th id="bust">Bust</th><th id="waist">Waist</th><th id="hip1">Hip 1</th><th id="hip2">Hip 2</th>
+            </tr>
+            <tr>
+                <td headers="size">2 (XS)</td><td headers="bust">32</td><td headers="waist">25.5</td><td headers="hip1">33.5</td><td headers="hip2">33.5</td>
+            </tr>
+            <tr>
+                <td headers="size">4 (S)</td><td headers="bust">34</td><td headers="waist">27</td><td headers="hip1">35</td><td headers="hip2">37</td>
+            </tr>
+            <tr>
+                <td headers="size">6 (M)</td><td headers="bust">36</td><td headers="waist">28.5</td><td headers="hip1">36.5</td><td headers="hip2">38.5</td>
+            </tr>
+            <tr>
+                <td headers="size">8 (M)</td><td headers="bust">38</td><td headers="waist">30</td><td headers="hip1">38</td><td headers="hip2">40</td>
+            </tr>
+            <tr>
+                <td headers="size">10 (L)</td><td headers="bust">40</td><td headers="waist">31.5</td><td headers="hip1">39.5</td><td headers="hip2">41.5</td>
+            </tr>
+            <tr>
+                <td headers="size">12 (L)</td><td headers="bust">42</td><td headers="waist">33</td><td headers="hip1">41</td><td headers="hip2">43</td>
+            </tr>
+            <tr>
+                <td headers="size">14 (XL)</td><td headers="bust">44</td><td headers="waist">34.5</td><td headers="hip1">42.5</td><td headers="hip2">44.5</td>
+            </tr>
+            <tr>
+                <td headers="size">16 (1X)</td><td headers="bust">46</td><td headers="waist">36</td><td headers="hip1">44</td><td headers="hip2">46</td>
+            </tr>
+            <tr>
+                <td headers="size">18 (2X)</td><td headers="bust">48</td><td headers="waist">37.5</td><td headers="hip1">45.5</td><td headers="hip2">47.5</td>
+            </tr>
+            <tr>
+                <td headers="size">20 (3X)</td><td headers="bust">50</td><td headers="waist">39</td><td headers="hip1">47</td><td headers="hip2">49</td>
+            </tr>
+            <tr>
+                <td headers="size">22 (3X)</td><td headers="bust">52</td><td headers="waist">40.5</td><td headers="hip1">48.5</td><td headers="hip2">50.5</td>
+            
+            </tr>
+        </table>
+
+        <div class="fitting-guide__description-wrapper">
+            <div class="fitting-guide__description">
+                <h2 class="section-heading">How to Measure</h2>
+                <p class="fitting-guide__description-subheading">1.Bust:</p>
+                <p>Using soft measuring tape, measure completely around the fullest part of the bust. Take a deep breath in and out to make sure the tape isn’t too tight or too loose.</p>
+                <p class="fitting-guide__description-subheading">2.Waist:</p>
+                <p>Measure the narrowest part of the waist.</p>
+                <p class="fitting-guide__description-subheading">3.Hip 1:</p>
+                <p>Measure the circumference of the hips 6" up from the crotch.</p>
+                <p class="fitting-guide__description-subheading">4.Hip 2:</p>
+                <p>Stand with your feet together, and identify the point of your hip that is level with your crotch. Measure the circumference of this area.</p>
+            </div>
+            <img class="fitting-guide__image" aria-hidden="true" src="{{ images['fitting-guide.jpg'] | img_url: 'master' }}">
+
+        </div>
+    </div>
+</div>
