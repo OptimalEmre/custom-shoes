@@ -56,7 +56,7 @@
         
         <div class="footer__contact">
             <p class="footer__subheading">Contact Us:</p>
-            <p><a aria-label="email" href="mailto:email@beachbaby.com">email@beachbaby.com</a></p>
+            <p><a aria-label="email" href="mailto:contact@shoesie.com">contact@shoesie.com</a></p>
             
             {%- assign socials = "Facebook Twitter Pinterest Instagram Tumblr Snapchat YouTube Vimeo" | split: ' ' -%}
 
@@ -100,7 +100,7 @@
                                 Thanks for subscribing!
                             </p>
                         {% else %}
-                            <label for="{{ formId }}-email" class="form__input--label">{{ newsletterText }}</label>
+                            <label for="{{ formId }}-email" class="form__input--label newsletter__input-label">{{ newsletterText }}</label>
                         {%- endif -%}
                         
                         <input type="email"

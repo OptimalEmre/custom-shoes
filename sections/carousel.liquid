@@ -1,9 +1,6 @@
 <section class="carousel">
     <div class="carousel__slider">
-        
-        <button class="button--left carousel__button--left{% if section.settings.hide-buttons == true %} sm--visually-hidden{% endif %}">{% render 'icon-arrow-left' %}</button>
-        <button class="button--right carousel__button--right{% if section.settings.hide-buttons == true %} sm--visually-hidden{% endif %}">{% render 'icon-arrow-right' %}</button>
-        <ul class="carousel__frame" data-autorotate="{{ section.settings.is-autorotate }}" data-rotation-delay="{% if section.settings.is-autorotate == true %}{{ section.settings.slide-duration }}{% else %}0{% endif %}">
+       <ul class="carousel__frame" data-autorotate="{{ section.settings.is-autorotate }}" data-rotation-delay="{% if section.settings.is-autorotate == true %}{{ section.settings.slide-duration }}{% else %}0{% endif %}">
             {% assign firstSlideText = "" %}
 
             {% for block in section.blocks %}
@@ -16,6 +13,7 @@
                     
                 {% endif %}
                 <li class="carousel__slide{% if forloop.first == true %}{{ ' carousel__slide--active' }}{% endif %}">
+                    <div class="overlay"></div>
                     {% if section.settings.is-first-text-default == false %}
                         <div class="carousel__cta-block">
                             <h1 class="carousel__cta-header carousel__cta-header--animation">
@@ -47,6 +45,7 @@
 
                         <img class="carousel__image lazyload" src="{{ block.settings.portrait-image | img_url: '10x'}}" data-src="{{ block.settings.portrait-image | img_url: '600x', format: 'pjpg' }}" data-sizes="auto" alt="{{ block.settings.alt-text }}">
                     </picture>
+
                 </li>
                 
             {% endfor %}
@@ -57,12 +56,17 @@
                 <a href="#quality-section" class="button main-button button--carousel">{{ section.settings.button-text }}</a>
             </div>
         {% endif %}
-        <div class="indicator-nav carousel__nav">
-            {% for block in section.blocks %}
-                <button class="nav-indicator carousel__nav-indicator{% if forloop.first == true %}{{ ' carousel__nav-indicator--active' }}{% endif %}"></button>
-            {% endfor %}
+        <div class="indicator-nav carousel__nav-wrapper">
+            <button class="button--left carousel__button--left{% if section.settings.hide-buttons == true %} sm--visually-hidden{% endif %}">{% render 'icon-arrow-left' %}</button>
+            <div class="carousel__nav">
+
+                {% for block in section.blocks %}
+                    <button class="nav-indicator carousel__nav-indicator{% if forloop.first == true %}{{ ' carousel__nav-indicator--active' }}{% endif %}"></button>
+                {% endfor %}
+
+            </div>
+            <button class="button--right carousel__button--right{% if section.settings.hide-buttons == true %} sm--visually-hidden{% endif %}">{% render 'icon-arrow-right' %}</button>
         </div>
-        
     </div>
 </section>
 
