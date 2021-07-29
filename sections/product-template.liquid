@@ -39,7 +39,8 @@
                 {% endif %}
             </div>
             <div class="product__review-info">
-                {% render 'judgeme_widgets', widget_type: 'judgeme_preview_badge', jm_style: '', concierge_install: false, product: product %}
+                <span class="product__stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
+                <span class="product__review-count"><a href="#product-reviews">154 Reviews</a></span>
             </div>
             <div class="product__description--static">
                 <div class="product__description-text--static">{{ description }}</div>
@@ -90,15 +91,121 @@
             <div class="product__description">
                 <button class="button--collapsible{% if section.settings.recommendation-collapsed == false %} button--collapsible--active" aria-expanded="true"{% else %}" aria-expanded="false"{% endif %}>Recommendation</button>
                 <div class="product__description-text recommendation-container{% if section.settings.recommendation-collapsed == false %} active{% endif %}">
-                    
+                    <div class="recommendations__image">
+                        <img class="product__image lazyload" alt="{{ product.images[0].alt }}" src="{{ product.images[0].src | img_url: '50x' }}" data-srcset="{{ product.images[0].src | img_url: 'x200' }} 420w,
+                                                                                                                                       {{ product.images[0].src | img_url: 'x400' }} 1024w,">
+                    </div>
+                    <div class="recommendations__content">
+                        <h4>This is a sample section</h4>
+                        <p>This area is reserved for third party apps such as recommendations.</p>
+                    </div>
                 </div>
             </div>
         </div>    
     </div>
+    {% comment %}<div id="product-reviews" class="product__reviews flow-content">{% endcomment %}
+        {% comment %}{% render 'judgeme_widgets', widget_type: 'judgeme_review_widget', concierge_install: false, product: product %}{% endcomment %}
+    {% comment %}</div>{% endcomment %}
+    <style>
+        .recommendations__star {
+            font-size: 14px;
+            font-weight: normal;
+            line-height: 16px;
+            vertical-align: middle;
+            color: #fff;
+        }
+
+        .star--filled:before {
+            content: "\e000";
+        }
+
+        .star--empty:before {
+            content: "\e001";
+        }
+    </style>
     <div id="product-reviews" class="product__reviews flow-content">
-        {% render 'judgeme_widgets', widget_type: 'judgeme_review_widget', concierge_install: false, product: product %}
-    </div>
-    {% render 'fitting-guide-table' %}
+        <div class="product__review-header flow-content">
+            <h2 class="section-heading review__heading">{{ product.title }}</h2>
+            <div class="review__count-stars">
+                <span class="product__stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
+                <span class="review__count">154 Reviews</span>
+            </div>
+            <button class="main-button button--review">Write a Review</button>
+            <button class="main-button button--review">Ask a Question</button>
+        </div>
+        <div class="product__review-box">
+
+            <p class="review__author">Jane Doe</p><p class="review__date">2.3.2021</p>
+            <p class="review__author-star">&#9733;&#9733;&#9733;&#9733;&#9733;</p>
+            <p class="review__heading">Great!</p>
+            <p class="review__content">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            </p>
+        </div>
+        <div class="product__review-box">
+
+            <p class="review__author">Jane Doe</p><p class="review__date">2.3.2021</p>
+            <p class="review__author-star">&#9733;&#9733;&#9733;&#9733;&#9734;</p>
+            <p class="review__heading">Great!</p>
+            <p class="review__content">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            </p>
+        </div>
+        <div class="product__review-box">
+
+            <p class="review__author">Jane Doe</p><p class="review__date">2.3.2021</p>
+            <p class="review__author-star">&#9733;&#9733;&#9734;&#9734;&#9734;</p>
+            <p class="review__heading">Great!</p>
+            <p class="review__content">
+                Lorem ipsum dolor sit amet, consectetur am, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            </p>
+        </div>
+        <div class="product__review-box">
+
+            <p class="review__author">Jane Doe</p><p class="review__date">2.3.2021</p>
+            <p class="review__author-star">&#9733;&#9733;&#9733;&#9733;&#9733;</p>
+            <p class="review__heading">Great!</p>
+            <p class="review__content">
+                Lorem ipsum dolor sit amet
+            </p>
+        </div>
+        <div class="product__review-box">
+
+            <p class="review__author">Jane Doe</p><p class="review__date">2.3.2021</p>
+            <p class="review__author-star">&#9733;&#9733;&#9733;&#9733;&#9733;</p>
+            <p class="review__heading">Great!</p>
+            <p class="review__content">
+                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            </p>
+        </div>
+        <div class="product__review-box">
+
+            <p class="review__author">Jane Doe</p><p class="review__date">2.3.2021</p>
+            <p class="review__author-star">&#9733;&#9733;&#9733;&#9733;&#9733;</p>
+            <p class="review__heading">Great!</p>
+            <p class="review__content">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            </p>
+        </div>
+        <div class="product__review-box">
+
+            <p class="review__author">Jane Doe</p><p class="review__date">2.3.2021</p>
+            <p class="review__author-star">&#9733;&#9733;&#9733;&#9733;&#9734;</p>
+            <p class="review__heading">Great!</p>
+            <p class="review__content">
+                Lorem ipsum dolor sit amet, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            </p>
+        </div>
+        <div class="product__review-box">
+
+            <p class="review__author">Jane Doe</p><p class="review__date">2.3.2021</p>
+            <p class="review__author-star">&#9733;&#9733;&#9733;&#9733;&#9733;</p>
+            <p class="review__heading">Great!</p>
+            <p class="review__content">
+                Lorem ipsum dolor sit amet,
+            </p>
+        </div>
+    {% comment %}{% render 'fitting-guide-table' %}{% endcomment %}
 </section>
 
 

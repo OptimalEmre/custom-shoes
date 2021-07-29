@@ -34,7 +34,7 @@
     
 {% endfor %}
 
-<footer class="site-footer critical-hidden" role="contentinfo" data-section-id="{{ section.id }}" data-section-type="footer-section"></footer>
+<footer class="site-footer critical-hidden" role="contentinfo" data-section-id="{{ section.id }}" data-section-type="footer-section">
 
     <div class="container footer__container">
                            
@@ -242,7 +242,7 @@
 {% endschema %}
 
 {% style %}
-.footer__container {
+.site-footer {
     background-color: {{ section.settings.section_bgcolor }};
 }
 {% endstyle %}

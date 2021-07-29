@@ -1040,7 +1040,7 @@ function beachbaby_onload_14389798() {
     }
 
     function updateProductSlide(targetSlide) {
-        document.querySelector('.product__image-slide--active').classList.remove('product__image-slide--active');
+        document.querySelector('.product__image-slider--active').querySelector('.product__image-slide--active').classList.remove('product__image-slide--active');
         targetSlide.classList.add('product__image-slide--active');
     }
 

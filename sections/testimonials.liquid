@@ -1,39 +1,37 @@
-<section class="testimonials-section" data-section-id="{{ section.id }}"></section>
-    <div>
-        <div class="testimonials__container">
-            <h2 class="section-heading testimonials__heading">Testimonials</h2>
-            <ul class="testimonials__list">
-                {% for block in section.blocks %}
-                    {% if block.settings.text == '' or block.settings.name-title == '' %}
-                        {% continue %}
-                    {% endif %}
-                    <li class="testimonials__box">
-                                                
-                        {% if section.settings.show_images == true %}
-                           <div class="testimonials__image">
-                                <img class="lazyload" src="{% if block.settings.image != blank %}                              
-                                                                                {{ block.settings.image | img_url: '30x' }}
-                                                                            {% else %}
-                                                                                {{ images['beachbaby-tree.jpg'] | img_url: '200x' }}    
-                                                                            {% endif %}"
-                                                                            {% if block.settings.image != blank %}
-                                                                                data-src="{{ block.settings.image | img_url: '200x' }}"
-                                                                            {% endif %} alt="Thoughts of {{block.settings.name-title | escape}}">
-                             </div>
-                        {% endif %}
-                        
-                        <p class="content-text testimonials__content">
-                            {{ block.settings.text | escape }}
-                        </p>
-                        <p class="content-text testimonials__name-title">
-                            {{ block.settings.name-title | escape }}
-                        </p>
+<section class="testimonials-section" data-section-id="{{ section.id }}">
+    <div class="testimonials__container">
+        <h2 class="section-heading testimonials__heading">Testimonials</h2>
+        <ul class="testimonials__list">
+            {% for block in section.blocks %}
+                {% if block.settings.text == '' or block.settings.name-title == '' %}
+                    {% continue %}
+                {% endif %}
+                <li class="testimonials__box">
 
-                    
-                    </li>
-                {% endfor %}
-            </ul>
-         </div>   
+                    {% if section.settings.show_images == true %}
+                       <div class="testimonials__image">
+                            <img class="lazyload" src="{% if block.settings.image != blank %}
+                                                                            {{ block.settings.image | img_url: '30x' }}
+                                                                        {% else %}
+                                                                            {{ images['beachbaby-tree.jpg'] | img_url: '200x' }}
+                                                                        {% endif %}"
+                                                                        {% if block.settings.image != blank %}
+                                                                            data-src="{{ block.settings.image | img_url: '200x' }}"
+                                                                        {% endif %} alt="Thoughts of {{block.settings.name-title | escape}}">
+                         </div>
+                    {% endif %}
+
+                    <p class="content-text testimonials__content">
+                        {{ block.settings.text | escape }}
+                    </p>
+                    <p class="content-text testimonials__name-title">
+                        {{ block.settings.name-title | escape }}
+                    </p>
+
+
+                </li>
+            {% endfor %}
+        </ul>
     </div>
 </section>
     
@@ -91,7 +89,7 @@
 {% endschema %}
 
 {% style %}
-    .testimonials__container {
+    .testimonials-section {
         background-color: {{ section.settings.section_bgcolor }};
     }
 {% endstyle %}

@@ -1505,7 +1505,7 @@ for additional rules.
     justify-content: center;
     align-items: center;
     width: 100%;
-    padding: 0.2rem 0;
+    padding: 0.4rem 0;
     text-align: center;
     border-bottom: 1px solid #999;
 }
@@ -1840,6 +1840,7 @@ for additional rules.
     display: inline-flex;
     bottom: 0;
     left: 50%;
+    padding: .5rem 1rem;
     border-radius: 100px;
     transform: translateX(-50%);
     -webkit-transform: translateX(-50%);
@@ -1853,6 +1854,8 @@ for additional rules.
 
 .carousel__nav {
     position: relative;
+    margin-left: .5rem;
+    margin-right: .5rem;
 }
 
 
@@ -1871,9 +1874,9 @@ for additional rules.
 }
 
 .carousel__nav-indicator {
-    width: 0.6rem;
-    height: 0.6rem;
-    margin: 0.5rem;
+    width: .7rem;
+    height: .7rem;
+    margin: .5rem;
     border: 2px solid var(--color--white);
     opacity: 0.8;
     cursor: pointer;
@@ -2216,6 +2219,7 @@ for additional rules.
     -ms-border-radius: 50%;
     -o-border-radius: 50%;
     overflow: hidden;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
 }
 
 .testimonials__image > img {
@@ -2456,10 +2460,14 @@ for additional rules.
 }
 
 .product__review-info {
-    font-size: .8rem;
+    font-size: 1.2rem;
 }
 
-.product__stars,
+.product__stars {
+    font-size: 1.5rem;
+    color: darkgoldenrod;
+}
+
 .product__review-count {
     font-size: .8rem;
 }
@@ -2526,7 +2534,7 @@ for additional rules.
     -ms-border-radius: 50%;
     -o-border-radius: 50%;
     border: 3px solid var(--color--accent);
-    cursor: unset;
+    cursor: initial;
 }
 
 .product__pattern-image {
@@ -2540,8 +2548,9 @@ for additional rules.
     box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.8);
 }
 
-.product__pattern-active > .product__pattern-image {
+.product__pattern--active > .product__pattern-image {
     border-color: var(--color--accent);
+    cursor: initial;
 }
 
 .product__out-of-stock {
@@ -2666,6 +2675,10 @@ for additional rules.
     align-items: center;
 }
 
+.recommendations__image {
+    width: 150px;
+}
+
 .product__description--static {
     padding: .5rem 0;
 }
@@ -2776,6 +2789,11 @@ for additional rules.
 .review__heading,
 .review__content {
     width: 100%;
+}
+
+.review__author-star {
+    font-size: 1.2rem;
+    color: darkgoldenrod;
 }
 
 .review__heading {
@@ -2993,6 +3011,7 @@ for additional rules.
         width: 2.4rem;
         height: 2.4rem;
         padding: .2rem;
+        margin-right: 1rem;
     }
 
     .header__cart-count {
@@ -3194,6 +3213,7 @@ for additional rules.
 
     .discount-container {
         display: flex;
+        justify-content: center;
         padding-left: var(--section-side-padding);
         padding-right: var(--section-side-padding);
         padding-bottom: var(--section-vertical-padding);
@@ -3206,13 +3226,12 @@ for additional rules.
     }
 
     .discount-banner__quality img {
-        width: 90%;
+        width: 70%;
     }
 
     .discount-banner {
-        width: 50vw;
-        height: 60vw;
-
+        width: 30vw;
+        height: calc(30vw * 0.908);
     }
 
     /* small pictures section */
@@ -3495,16 +3514,9 @@ for additional rules.
         padding-bottom: 4rem;
     }
 
-    .discount-banner {
+    /*.discount-banner {
         height: 100vh;
-    }
-
-    /* .small-pictures__image {
-        width: 19vw;
-        max-width: 370px;
-        height: calc((19vw / var(--default-aspect-ratio)) * 100);
-        max-height: 429px;
-    } */
+    }*/
 
     .small-pictures__text-content {
         padding-left: 5rem;
@@ -3578,11 +3590,14 @@ for additional rules.
     
     .header__container,
     .footer__container {
-        max-width: 100%;
+        max-width: var(--max-page-width);
     }
 
     .fitting-guide__window {
         height: 992px;
+    }
+    .navigation__menu {
+        padding-right: 0;
     }
 
     .navigation__menu-link,
@@ -3591,10 +3606,13 @@ for additional rules.
         margin: 0 1.5rem;
     }
 
-    
+
     /* dynamic sections */
     .carousel {
-        max-height: 90vh;
+        width: var(--max-page-width);
+        height: calc(var(--max-page-width) * 0.6655);
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .discount-banner__heading {
@@ -3605,7 +3623,9 @@ for additional rules.
     }
 
     :root {
-        --small-pictures-box-width: calc(35vw - (var(--default-side-padding) * 2));
+        --small-pictures-box-width: calc((var(--max-page-width) / 4) - (var(--default-side-padding) * 2));
+        --image-frame-width: calc(((var(--max-page-width) / 4) - 2.5rem) - (var(--default-side-padding) * 2));
+        {% comment %}--small-pictures-box-width: calc(35vw - (var(--default-side-padding) * 2));{% endcomment %}
     }
 
     /* frontpage */
@@ -3618,5 +3638,16 @@ for additional rules.
         width: 388px;
         height: calc((388px / var(--default-aspect-ratio)) * 100);
     }
-       
+
+    .testimonials-section {
+        max-width: var(--max-page-width);
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .testimonials__container {
+        max-width: 1500px;
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
