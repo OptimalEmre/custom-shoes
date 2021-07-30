@@ -1746,8 +1746,8 @@ for additional rules.
 /*---------------------------------------------*/
 
 .carousel {
-    width: 100%;
-    height: 100vh;
+    width: 100vw;
+    height: calc(100vw * 1.084);
     background-color: #fff;
 }
 
@@ -2121,6 +2121,7 @@ for additional rules.
 
 .small-pictures__container {
     padding: calc(var(--section-vertical-padding) * 2) 0;
+
 }
 
 .small-pictures__images {
@@ -2211,7 +2212,7 @@ for additional rules.
     width: 7rem;
     height: 7rem;
     display: inline-block;
-    margin-bottom: .7rem;
+    margin-bottom: 1rem;
     border: 2px solid var(--color--white);
     border-radius: 50%;
     -webkit-border-radius: 50%;
@@ -3238,6 +3239,7 @@ for additional rules.
 
     .small-pictures__container {
         display: flex;
+        justify-content: center;
         padding: var(--section-vertical-padding) var(--section-side-padding);
     }
 
@@ -3323,7 +3325,7 @@ for additional rules.
     :root {
         --product-box-padding: 2vw;
         --product-box-gap: var(--default-side-padding);
-        --product-box-width: calc(50vw - (var(--section-side-padding)) - var(--product-box-gap));
+        --product-box-width: calc(50vw - (var(--section-side-padding)) - (var(--product-box-gap) * 2));
     }
 
     .md--visually-hidden {
@@ -3457,7 +3459,7 @@ for additional rules.
         --product-box-padding: 1vw;
         --collection-box-padding: 2vw;
         --product-box-gap: var(--default-side-padding);
-        --product-box-width: calc(24vw - (var(--section-side-padding)) - var(--product-box-gap));
+        {% comment %}--product-box-width: calc(24vw - (var(--section-side-padding)) - var(--product-box-gap));{% endcomment %}
         --collection-box-width: calc(49vw - (var(--section-side-padding)) - var(--product-box-gap));
         --collection-frame-width: calc(var(--collection-box-width) - (var(--collection-box-padding) * 2));
         --collection-frame-height: calc((var(--collection-frame-width) / var(--default-aspect-ratio)) * 100);
