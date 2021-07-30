@@ -1,14 +1,106 @@
-<h1>{{ page.title }}</h1>
-{% form 'contact' %}
+
+<div class="contact-form-container">
+  <h1 class="contact__header">Privacy Policy</h1>
+  <p>
+    Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.&nbsp;At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.&nbsp;
+  </p>
+{% form 'contact', class: 'contact-form' %}
   {% if form.posted_successfully? %} Thank you for your contact {% endif %}
   {{ form.errors | default_errors }}
-  <label for="ContactFormName">name</label>
-  <input type="text" id="ContactFormName" name="contact[name]">
-  <label for="ContactFormEmail">email</label>
-  <input type="email" id="ContactFormEmail" name="contact[email]">
-  <label for="ContactFormPhone">phone</label>
-  <input type="tel" id="ContactFormPhone" name="contact[phone]">
-  <label for="ContactFormMessage">message</label>
-  <textarea rows="10" id="ContactFormMessage" name="contact[body]"></textarea>
-  <input type="submit" value="send">
+
+    <div class="contact-form__input input--name width--half">
+      <label for="ContactFormName">name</label>
+      <input type="text" id="ContactFormName" name="contact[name]">
+    </div>
+    <div class="contact-form__input input--email width--half">
+      <label for="ContactFormEmail">email</label>
+      <input type="email" id="ContactFormEmail" name="contact[email]">
+    </div>
+    <div class="contact-form__input input--phone width--full">
+      <label for="ContactFormPhone">phone</label>
+      <input type="tel" id="ContactFormPhone" name="contact[phone]">
+    </div>
+    <div class="contact-form__input input--message width--full">
+      <label for="ContactFormMessage">message</label>
+      <textarea rows="10" id="ContactFormMessage" name="contact[body]"></textarea>
+    </div>
+
+      <input type="submit" value="send" class="contact-form__submit">
+
+
 {% endform %}
+</div>
+<style>
+
+  label,
+  input,
+  textarea {
+    display: block;
+    width: 100%;
+    border: 1px solid black;
+    padding: .5rem .5rem .5rem 0;
+    font-size: 1rem;
+    font-family: "Roboto", Arial, sans-serif;
+  }
+
+  label {
+    border: 0;
+  }
+  input,
+  textarea {
+    padding-left: .5rem;
+  }
+
+.contact-form-container {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: left;
+  padding-bottom: 2rem;
+}
+
+.width--full {
+  width: 100%;
+}
+
+.width--half {
+  width: 50%;
+}
+
+.contact__header {
+  margin: 4rem auto 2rem;
+  color: #191919;
+}
+
+p {
+  font-family: "Roboto", Arial, sans-serif;
+  font-weight: 300;
+  line-height: 1.6;
+  letter-spacing: 1px;
+  color: #191919;
+}
+
+.contact-form {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.contact-form__input {
+  padding: 1rem 1rem 1rem 0;
+}
+
+.contact-form__submit {
+  width: initial;
+  padding: .5em 1.5em;
+  cursor: pointer;
+  background: var(--color--accent);
+  color: white;
+  border: 0;
+  box-shadow: var(--default-box-shadow);
+}
+
+  .contact-form__submit:hover {
+    background-color: var(--color--main);
+  }
+</style>

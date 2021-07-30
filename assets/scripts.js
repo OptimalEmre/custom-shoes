@@ -1545,7 +1545,7 @@ function setAnimationDelay(element, delayTime = 500) {
 function runAnimation(animatedElementArray) {
 
     animatedElementArray.forEach((element) => {
-        if (isInViewport(element)) {
+        if (isInViewport(element, 200)) {
             if (element.classList.contains('small-pictures__frame')) {  //special case for small pictures section
                 Array.from(document.getElementsByClassName('small-pictures__frame')).forEach((element) => {
                     element.style.animationPlayState = 'running'; 
