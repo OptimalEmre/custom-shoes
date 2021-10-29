@@ -1,6 +1,229 @@
 {
-  "current": "Default",
+  "current": {
+    "social_facebook": "https:\/\/www.facebook.com\/shopify",
+    "social_twitter": "https:\/\/twitter.com\/shopify",
+    "social_pinterest": "https:\/\/www.pinterest.com\/shopify",
+    "social_instagram": "https:\/\/instagram.com\/shopify",
+    "social_vimeo": "https:\/\/vimeo.com\/shopify",
+    "social_tumblr": "https:\/\/shopify.tumblr.com",
+    "social_youtube": "https:\/\/www.youtube.com\/user\/shopify",
+    "social_snapchat": "https:\/\/snapchat.com\/add\/shopify",
+    "sections": {
+      "header": {
+        "type": "header",
+        "settings": {
+          "notification-enable": true,
+          "is-closable": true,
+          "notification-text": "A sample custom store theme built by Optimal Web Apps Shopify Solutions",
+          "notification-link": "",
+          "notification-background-color": "#606060",
+          "notification-text-color": "#cccccc",
+          "notification-link-color": "#dddddd"
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "blocks": {
+          "936498d5-dd0a-4393-92f1-bc868c36f953": {
+            "type": "newsletter",
+            "settings": {
+              "title": "Newsletter"
+            }
+          },
+          "dc81289f-05e5-4c27-876a-f7da9672bba7": {
+            "type": "bottom_link",
+            "settings": {
+              "title": "Terms of Service",
+              "url": "shopify:\/\/pages\/terms-of-service"
+            }
+          },
+          "df09bf29-9271-43b1-a31c-f8781560f81c": {
+            "type": "bottom_link",
+            "settings": {
+              "title": "Privacy Policy",
+              "url": "shopify:\/\/pages\/privacy-policy"
+            }
+          }
+        },
+        "block_order": [
+          "936498d5-dd0a-4393-92f1-bc868c36f953",
+          "dc81289f-05e5-4c27-876a-f7da9672bba7",
+          "df09bf29-9271-43b1-a31c-f8781560f81c"
+        ],
+        "settings": {
+          "section_bgcolor": "#191919",
+          "link_list": "footer",
+          "copyright": "Shoosie Shoes LLC, Copyright #YEAR#",
+          "show_payment_icons": true
+        }
+      },
+      "1627488815767bd730": {
+        "type": "carousel",
+        "blocks": {
+          "45197ca9-af6a-4773-a0e9-6264f8cf1210": {
+            "type": "select",
+            "settings": {
+              "portrait-image": "shopify:\/\/shop_images\/slide01-portrait-min.jpg",
+              "landscape-image": "shopify:\/\/shop_images\/slide01-landscape-min.jpg",
+              "alt-text": "",
+              "cta-text": "Shosie, your walking companion"
+            }
+          },
+          "d08a9910-18ab-40b2-abfb-7d8428cdec7e": {
+            "type": "select",
+            "settings": {
+              "portrait-image": "shopify:\/\/shop_images\/slide02-portrait-min.jpg",
+              "landscape-image": "shopify:\/\/shop_images\/slide02-landscape-min.jpg",
+              "alt-text": "",
+              "cta-text": ""
+            }
+          }
+        },
+        "block_order": [
+          "45197ca9-af6a-4773-a0e9-6264f8cf1210",
+          "d08a9910-18ab-40b2-abfb-7d8428cdec7e"
+        ],
+        "settings": {
+          "is-autorotate": true,
+          "is-first-text-default": true,
+          "button-text": "Shop Now",
+          "slide-duration": 3,
+          "hide-buttons": false
+        }
+      },
+      "162749475407fff081": {
+        "type": "discount-banner",
+        "settings": {
+          "section_bgcolor": "",
+          "discount_bgimage": "shopify:\/\/shop_images\/discount-image.jpg",
+          "image_position": "left",
+          "bg_alignment": "center center",
+          "discount_heading": "Save 25%",
+          "discount_subheading": "Summer sale",
+          "svg_file": "quality.svg",
+          "svg_alt": ""
+        }
+      },
+      "product-template": {
+        "type": "product-template",
+        "settings": {
+          "details-collapsed": true,
+          "recommendation-collapsed": false
+        }
+      },
+      "1627496100bae10b61": {
+        "type": "small-pictures-section",
+        "blocks": {
+          "7c0b1892-821e-47ea-8088-1e975237b81d": {
+            "type": "select",
+            "settings": {
+              "product_name": "comfortance"
+            }
+          },
+          "c2fdf439-fbbc-452b-a453-528979b617c1": {
+            "type": "select",
+            "settings": {
+              "product_name": "jugendstil"
+            }
+          },
+          "863fe46f-acc2-4d3a-a40c-0ded34f42d2d": {
+            "type": "select",
+            "settings": {
+              "product_name": "retro-star"
+            }
+          },
+          "b882529d-fb53-47d0-8842-afa52a2479ef": {
+            "type": "select",
+            "settings": {
+              "product_name": "venture"
+            }
+          }
+        },
+        "block_order": [
+          "7c0b1892-821e-47ea-8088-1e975237b81d",
+          "c2fdf439-fbbc-452b-a453-528979b617c1",
+          "863fe46f-acc2-4d3a-a40c-0ded34f42d2d",
+          "b882529d-fb53-47d0-8842-afa52a2479ef"
+        ],
+        "settings": {
+          "section_bgcolor": "#f4f4f4",
+          "image_position": "left",
+          "heading": "Nam maximus vel tortor bibendum ultricies",
+          "text": "Vestibulum porttitor ipsum urna, at facilisis eros suscipit a. Nullam imperdiet enim quis erat viverra, ut feugiat felis iaculis. Etiam mi ante, viverra vel lacus et, porttitor maximus massa. Nunc ut aliquet dui, quis ornare orci. Nunc ullamcorper porta risus, ut efficitur quam."
+        }
+      },
+      "1627496140a92f5f2d": {
+        "type": "testimonials",
+        "blocks": {
+          "6a210035-492f-4ec9-be86-24a932a56c69": {
+            "type": "select",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/testimonial01.jpg",
+              "name-title": "Lorena Kingston - Customer",
+              "text": "Cras pharetra enim nibh, quis condimentum erat vestibulum vulputat!"
+            }
+          },
+          "cc966404-187c-4caf-94b8-734fb83a2861": {
+            "type": "select",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/testimonial02.jpg",
+              "name-title": "Will Perry - Customer",
+              "text": "Etiam in arcu lacinia, ullamcorper quam eu, congue velit. Aenean egestas velit at justo tristique ultrices. Maecenas tincidunt laoreet orci, eu mollis neque rhoncus et."
+            }
+          },
+          "32332c9a-67f8-4ef7-9bda-9af801b10fb1": {
+            "type": "select",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/testimonial03.jpg",
+              "name-title": "Ruth Livingston - Shoes Mag",
+              "text": "Nullam a nibh dignissim, rutrum nisl ut, maximus est. Suspendisse eget tortor in libero ultricies ornare sit amet malesuada lectus."
+            }
+          }
+        },
+        "block_order": [
+          "6a210035-492f-4ec9-be86-24a932a56c69",
+          "cc966404-187c-4caf-94b8-734fb83a2861",
+          "32332c9a-67f8-4ef7-9bda-9af801b10fb1"
+        ],
+        "settings": {
+          "section_bgcolor": "#f4f4f4",
+          "show_images": true
+        }
+      },
+      "collection-template": {
+        "type": "collection-template",
+        "settings": {
+          "heading": "Our Collection",
+          "subheading": "",
+          "max_product_per_page": 4,
+          "max_pattern": 5,
+          "max_image": 3,
+          "hide-buttons": false
+        }
+      },
+      "1627511747c8c08fb3": {
+        "type": "frontpage-products",
+        "settings": {
+          "section_bgcolor": "",
+          "heading": "Our Collection",
+          "subheading": "",
+          "max_product": 4,
+          "max_pattern": 5,
+          "max_image": 3,
+          "hide-buttons": false
+        }
+      }
+    },
+    "content_for_index": [
+      "1627488815767bd730",
+      "162749475407fff081",
+      "1627496100bae10b61",
+      "1627511747c8c08fb3",
+      "1627496140a92f5f2d"
+    ]
+  },
   "presets": {
-    "Default": { }
+    "Default": {
+    }
   }
 }

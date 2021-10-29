@@ -3616,14 +3616,22 @@ for additional rules.
     /* dynamic sections */
     .carousel {
         --carousel-width: calc(100vw - (100vw - 100%));
-        --carousel-height: calc(var(--carousel-width) * 0.6655 );
+        --carousel-height: calc(100vh - 97px); /*calc(var(--carousel-width) * 0.6655 );*/
 
         width: calc(100vw - (100vw - 100%));
-        height: calc(100vw * 0.6655);
+        height: calc(100vh - 97px);
         max-width: var(--max-page-width);
-        max-height: calc(var(--max-page-width) * 0.6655);
+        /*max-height: calc(var(--max-page-width) * 0.6655);*/
         margin-left: auto;
         margin-right: auto;
+    }
+    
+    .carousel__slide {
+        top: unset;
+    }
+    
+    .carousel__nav-wrapper {
+        bottom: 2rem;
     }
 
     .discount-banner__heading {
