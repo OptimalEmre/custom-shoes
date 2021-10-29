@@ -12,7 +12,13 @@
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
         {{ 'theme.css' | asset_url | stylesheet_tag }}
-        
+        <style>
+            .static-page-container {
+                max-width: 1200px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        </style>
     </head>
     <body>
         <a class="screen-reader-only skip-link" href="#main-content">Skip to main content</a>
@@ -23,7 +29,9 @@
         {% section 'cart-header' %}
 
         <main id="main-content" role="main">
-            {{ content_for_layout }}
+            <div class="static-page-container">
+                {{ content_for_layout }}
+            </div>
         </main>
 
         {% section 'footer' %}

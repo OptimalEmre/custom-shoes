@@ -175,8 +175,8 @@ body {
     font-family: "Roboto", sans-serif;
     box-sizing: border-box;
     text-align: center;
-    animation: fade-in 1s 1s;
-    -webkit-animation: fade-in 1s 1s;
+    animation: fade-in 100ms 100ms;
+    -webkit-animation: fade-in 100ms 100ms;
     animation-fill-mode: backwards;
     animation-play-state: paused;
 }
@@ -3463,7 +3463,7 @@ for additional rules.
         --collection-box-padding: 2vw;
         --product-box-gap: var(--default-side-padding);
         {% comment %}--product-box-width: calc(24vw - (var(--section-side-padding)) - var(--product-box-gap));{% endcomment %}
-        --collection-box-width: calc(49vw - (var(--section-side-padding)) - var(--product-box-gap));
+        --collection-box-width: calc(48vw - (var(--section-side-padding)) - var(--product-box-gap));
         --collection-frame-width: calc(var(--collection-box-width) - (var(--collection-box-padding) * 2));
         --collection-frame-height: calc((var(--collection-frame-width) / var(--default-aspect-ratio)) * 100);
         
@@ -3496,8 +3496,9 @@ for additional rules.
     }
 
     .header__logo {
-        width: 15rem;
-        padding: 1.5rem;
+        width: 7rem;
+        padding: .5rem ;
+        padding-left: 1.5rem;
     }
 
     .navigation {
@@ -3607,15 +3608,20 @@ for additional rules.
 
     .navigation__menu-link,
     .navigation__menu-link--active {
-        font-size: 1.4rem;
+        font-size: 1.1rem;
         margin: 0 1.5rem;
     }
 
 
     /* dynamic sections */
     .carousel {
-        width: var(--max-page-width);
-        height: calc(var(--max-page-width) * 0.6655);
+        --carousel-width: calc(100vw - (100vw - 100%));
+        --carousel-height: calc(var(--carousel-width) * 0.6655 );
+
+        width: calc(100vw - (100vw - 100%));
+        height: calc(100vw * 0.6655);
+        max-width: var(--max-page-width);
+        max-height: calc(var(--max-page-width) * 0.6655);
         margin-left: auto;
         margin-right: auto;
     }

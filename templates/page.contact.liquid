@@ -45,62 +45,78 @@
 
   label {
     border: 0;
+    text-transform: capitalize;
   }
+
   input,
   textarea {
     padding-left: .5rem;
   }
+  .contact-form-container {
+    text-align: left;
+    padding: 3rem 1rem;
+  }
 
-.contact-form-container {
-  display: flex;
-  flex-wrap: wrap;
-  max-width: 900px;
-  margin: 0 auto;
-  text-align: left;
-  padding-bottom: 2rem;
-}
+  .contact__header {
+    margin: 0 auto 2rem;
+    color: #191919;
+    text-align: center;
+  }
 
-.width--full {
-  width: 100%;
-}
+  p {
+    font-family: "Roboto", Arial, sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    letter-spacing: 1px;
+    color: #191919;
+    margin-bottom: 2rem;
 
-.width--half {
-  width: 50%;
-}
+  }
 
-.contact__header {
-  margin: 4rem auto 2rem;
-  color: #191919;
-}
+  .contact-form {
+    display: flex;
+    flex-wrap: wrap;
+  }
 
-p {
-  font-family: "Roboto", Arial, sans-serif;
-  font-weight: 300;
-  line-height: 1.6;
-  letter-spacing: 1px;
-  color: #191919;
-}
+  .contact-form__input {
+    width: 100%;
+  }
 
-.contact-form {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.contact-form__input {
-  padding: 1rem 1rem 1rem 0;
-}
-
-.contact-form__submit {
-  width: initial;
-  padding: .5em 1.5em;
-  cursor: pointer;
-  background: var(--color--accent);
-  color: white;
-  border: 0;
-  box-shadow: var(--default-box-shadow);
-}
+  .contact-form__submit {
+    width: initial;
+    padding: .5em 1.5em;
+    cursor: pointer;
+    background: var(--color--accent);
+    color: white;
+    border: 0;
+    box-shadow: var(--default-box-shadow);
+    margin-top: .5rem;
+  }
 
   .contact-form__submit:hover {
     background-color: var(--color--main);
+  }
+
+  @media screen and (min-width: 550px) {
+    .contact-form-container {
+      display: flex;
+      flex-wrap: wrap;
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: left;
+      padding: 4rem 2rem;
+    }
+
+    .contact-form__input {
+      padding: 1rem 1rem 1rem 0;
+    }
+
+    .width--full {
+      width: 100%;
+    }
+
+    .width--half {
+      width: 50%;
+    }
   }
 </style>

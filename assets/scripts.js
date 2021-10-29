@@ -74,17 +74,35 @@ function beachbaby_onload_14389798() {
 
     let removeItemButtonArray = new Array();
     let itemCountInputArray = new Array();
+    let lastButton = null;
     
     // Events
     if (shoppingCart) {
 
         if(shoppingCartForm) {
+
+            document.addEventListener('click',(e) => {
+                if (!e.target.closest) return;
+                lastButton = e.target.closest('button, input[type=submit]');
+            }, true);
+
             shoppingCartForm.addEventListener('submit', (event) => {  // preventing the regular buttons from submitting as default.
-                if (event.submitter != ShoppingCartSubmit) {
+                //polyfill for safari
+                if (!event.submitter) {
+                    event.submitter = lastButton;
+                }
+                //end of polyfill
+                
+                if (event.submitter !== ShoppingCartSubmit) {
                     event.preventDefault();
                 }
 
-                return;
+                console.log('event.submitter: ');
+                console.log(event.submitter);
+                console.log('Shopping Cart submit: ');
+                console.log(ShoppingCartSubmit);
+
+                return true;
             });
         }
 

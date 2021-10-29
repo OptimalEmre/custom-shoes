@@ -1,0 +1,49 @@
+
+<div class="contact-form-container">
+  <h1 class="contact__header">{{ page.title }}</h1>
+
+  {{ page.content }}
+
+</div>
+<style>
+  .static-page-container {
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .contact-form-container {
+    text-align: left;
+    padding: 3rem 1rem;
+  }
+
+  .contact__header {
+    margin: 0 auto 2rem;
+    color: #191919;
+    text-align: center;
+  }
+
+  p {
+    font-family: "Roboto", Arial, sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    letter-spacing: 1px;
+    color: #191919;
+    margin-bottom: 2rem;
+
+  }
+
+  @media screen and (min-width: 550px) {
+    .contact-form-container {
+      display: flex;
+      flex-wrap: wrap;
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: left;
+      padding: 4rem 2rem;
+    }
+
+  }
+
+</style>
+
